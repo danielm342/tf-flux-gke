@@ -40,3 +40,12 @@ module "gke-workload-identity" {
   annotate_k8s_sa     = true
   roles               = ["roles/cloudkms.cryptoKeyEncrypterDecrypter"]
 }
+
+module "kms" {
+  source          = "github.com/den-vasyliev/terraform-google-kms"
+  project_id      = var.GOOGLE_PROJECT
+  keyring         = "sops-flux"
+  location        = "global"
+  keys            = ["sops-key-flux"]
+  prevent_destroy = false
+}
